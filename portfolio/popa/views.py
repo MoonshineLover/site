@@ -1,24 +1,24 @@
 from django.shortcuts import render
+from .models import Counter
+
 
 # Create your views here.
 
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 
 
-def helloMQ(request):
-    return HttpResponse('<h1>я того хуй ебал</h1>')
-
-
-def mainPage(request):
-    return render(request, 'mainPage.html')
+def MainPage(request):
+    return render(request, 'popa/MainPage.html')
 
 
 def sanya(request):
-    return HttpResponse('<h1>саня соси хуй</h1>')
-
-
-def index(request):
-    return HttpResponse(f'эта траницатоже найдена но ошибка 404 буде (потом)')
+    counter = Counter.objects.first()
+    if not counter:
+        counter = Counter.objects.create()
+    if request.method == 'POST':
+        counter.count += 1
+        counter.save()
+    return render(request, 'popa/sanya.html', {'counter': counter.count})
 
 
 def what(request, user_id):
@@ -27,7 +27,7 @@ def what(request, user_id):
 
 
 def pageNotFound(request, exception):
-    return render(request, 'popa/error404.html')
+    return render(request, 'error404.html')
 
 def ServerError500(request):
-    return render(request, 'popa/error500.html')
+    return render(request, 'error500.html')

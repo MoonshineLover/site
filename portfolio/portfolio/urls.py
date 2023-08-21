@@ -19,8 +19,8 @@ from django.urls import path, include
 from popa.views import *
 
 urlpatterns = [
+    path('', MainPage, name='MainPage'),
     path('admin/', admin.site.urls),
-    path('main/', mainPage),
     path('popa/', include('popa.urls')),
     path('sanya/', sanya)
 ]
